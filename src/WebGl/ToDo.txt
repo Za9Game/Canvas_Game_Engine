@@ -1,0 +1,12 @@
+TodoList
+
+Main Aim:
+
+✔TODO: Generalize Object
+TODO: Input
+TODO: UI Engine
+TODO: Display Objects with Property
+TODO: Modify them
+TODO: ImportSprite
+TODO: Collision
+TODO: Physics
