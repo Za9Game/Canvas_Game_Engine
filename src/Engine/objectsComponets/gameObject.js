@@ -19,7 +19,7 @@ class GameObject extends React.Component{
         };
 */
     }
-
+/*
     draw = (ctx, canvas) =>{
         
         this.asyncDraw.bind(this, ctx, canvas);
@@ -33,20 +33,21 @@ class GameObject extends React.Component{
             console.log(imageSrc);
             ctx.drawImage(img, posX, posY, imageW, imageH, 0, 0, canvas.width, canvas.height);
         };
-    }
+    }*/
     
-    demo_draw = () =>{
-        
-        this.demo_asyncDraw.bind(this);
-        this.demo_asyncDraw();
+    demo_draw = (e) =>{
+        this.demo_asyncDraw.bind(this, imageSrc);
+        this.demo_asyncDraw(imageSrc);
     }
 
-    demo_asyncDraw = async() => {
+    demo_asyncDraw = async(e) => {
+        console.log("e fin qui..");
         var img = new Image();
-        img.src = imageSrc;
         console.log(imageSrc);
+        img.src = imageSrc;
         img.onload = function(){
-            console.log(imageSrc);
+            console.log("CE LABBIAMO FATTA")
+            console.log(img.src);
         };
     }
 

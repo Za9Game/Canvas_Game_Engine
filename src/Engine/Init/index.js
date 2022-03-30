@@ -162,11 +162,11 @@ function draw() {
   // Center main canvas area to the middle of the screen
   ctx.translate(-balloonX, 0);
 
-
+/*
   gameObjects.forEach(object =>{
     object.draw(ctx, canvas);
   });
-
+*/
 
   // Draw scene
   //drawTrees();
