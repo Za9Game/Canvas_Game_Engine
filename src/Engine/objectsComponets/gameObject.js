@@ -12,30 +12,31 @@ class GameObject extends React.Component{
         posY = props.posY;
         imageW = props.imageW;
         imageH = props.imageH;
-        this.demo_draw();
+        //this.demo_draw();
 /*
         this.state = {
 
         };
 */
     }
-/*
+
     draw = (ctx, canvas) =>{
-        
-        this.asyncDraw.bind(this, ctx, canvas);
-        this.asyncDraw(ctx, canvas);
+        console.log(imageSrc);
+        this.asyncDraw.bind(this, ctx, canvas, imageSrc);
+        this.asyncDraw(ctx, canvas, imageSrc);
     }
 
-    asyncDraw = async(ctx, canvas) => {
+    asyncDraw = async(ctx, canvas, ePath) => {
         var img = new Image();
-        img.src = imageSrc;
+        img.setAttribute('crossOrigin', '');
+        img.src = ePath.default;
         img.onload = function(){
-            console.log(imageSrc);
+            console.log(img.src);
             ctx.drawImage(img, posX, posY, imageW, imageH, 0, 0, canvas.width, canvas.height);
         };
-    }*/
+    }
     
-    demo_draw = (e) =>{
+    demo_draw = () =>{
         this.demo_asyncDraw.bind(this, imageSrc);
         this.demo_asyncDraw(imageSrc);
     }
@@ -43,8 +44,11 @@ class GameObject extends React.Component{
     demo_asyncDraw = async(e) => {
         console.log("e fin qui..");
         var img = new Image();
-        console.log(imageSrc);
+        console.log(e.default);
+        imageSrc = e.default;
+        img.setAttribute('crossOrigin', '');
         img.src = imageSrc;
+        console.log(img.src);
         img.onload = function(){
             console.log("CE LABBIAMO FATTA")
             console.log(img.src);

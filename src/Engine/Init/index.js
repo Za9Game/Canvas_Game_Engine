@@ -162,11 +162,11 @@ function draw() {
   // Center main canvas area to the middle of the screen
   ctx.translate(-balloonX, 0);
 
-/*
+
   gameObjects.forEach(object =>{
     object.draw(ctx, canvas);
   });
-*/
+
 
   // Draw scene
   //drawTrees();
@@ -353,7 +353,7 @@ function Init(id){
   horizontalPadding = (canvas.width - mainAreaWidth) / 2;
   verticalPadding = (canvas.height - mainAreaHeight) / 2;
 
-  gameObjects = [new GameObject({path: require("../Resources/Player.png"), posX: 10, posY: 10, imageW: 64, imageH: 64})];
+  gameObjects = [new GameObject({path: require("../Resources/Player.png"), posX: -10, posY: -10, imageW: 64, imageH: 64})];
 
   /*
   introductionElement = document.getElementById("introduction");
