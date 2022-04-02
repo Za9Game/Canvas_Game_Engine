@@ -1,5 +1,6 @@
 import React from "react";
 
+var img, instantiated = false;
 let imageSrc;
 let posX, posY, imageW, imageH;
 
@@ -12,7 +13,7 @@ class GameObject extends React.Component{
         posY = props.posY;
         imageW = props.imageW;
         imageH = props.imageH;
-        //this.demo_draw();
+        this.instantiate();
 /*
         this.state = {
 
@@ -20,39 +21,49 @@ class GameObject extends React.Component{
 */
     }
 
-    draw = (ctx, canvas) =>{
+    instantiate(){
         console.log(imageSrc);
-        this.asyncDraw.bind(this, ctx, canvas, imageSrc);
-        this.asyncDraw(ctx, canvas, imageSrc);
-    }
-
-    asyncDraw = async(ctx, canvas, ePath) => {
-        var img = new Image();
-        img.setAttribute('crossOrigin', '');
-        img.src = ePath.default;
-        img.onload = function(){
-            console.log(img.src);
-            ctx.drawImage(img, posX, posY, imageW, imageH, 0, 0, canvas.width, canvas.height);
-        };
-    }
+        this.asyncInstantiate.bind(this, imageSrc);
+        this.asyncInstantiate(imageSrc);
     
-    demo_draw = () =>{
-        this.demo_asyncDraw.bind(this, imageSrc);
-        this.demo_asyncDraw(imageSrc);
+    }
+    asyncInstantiate = async(e) => {
+        img = new Image();
+        img.setAttribute('crossOrigin', '');
+        imageSrc = e.default;
+        img.src = imageSrc;
+        img.onload = function(){
+            instantiated = true;
+            imageW = this.width * imageW;
+            imageH = this.height * imageH;
+            
+            console.log("Instanziata"+img.src);
+        };
     }
 
-    demo_asyncDraw = async(e) => {
-        console.log("e fin qui..");
-        var img = new Image();
-        console.log(e.default);
-        imageSrc = e.default;
-        img.setAttribute('crossOrigin', '');
-        img.src = imageSrc;
-        console.log(img.src);
-        img.onload = function(){
-            console.log("CE LABBIAMO FATTA")
-            console.log(img.src);
-        };
+    draw = (ctx, canvas) =>{
+        if(instantiated){
+            ctx.drawImage(img, posX, posY,imageW, imageH);
+        }    
+    }
+
+
+    keyDown = (e) =>{
+        console.log(e.key);
+        switch(e.key){
+            case 'w':
+                posY -= 1;
+                break;
+            case 'a':
+                posX -= 1;
+                break;
+            case 's':
+                posY += 1;
+                break;
+            case 'd':
+                posX += 1;
+                break;
+        }
     }
 
 } 
