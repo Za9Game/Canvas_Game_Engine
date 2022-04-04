@@ -3,9 +3,6 @@ import GameObject from "../objectsComponets/gameObject";
 
 let gameStarted; 
 
-let mainAreaWidth;
-let mainAreaHeight;
-
 let ctx;
 let gameObjects;
 
@@ -61,12 +58,15 @@ let canvas;
 function Init(id){
   canvas = document.getElementById(id);
   ctx = canvas.getContext("2d");
-
-  mainAreaWidth = canvas.width-130;
-  mainAreaHeight = canvas.height-130;
-
+  let n=0;
   gameObjects = [new GameObject({path: require("../Resources/Player.png"), posX: 10, posY: 10, imageW: 4, imageH: 4})];
-
+ /* for(let i=0;i<800;i+=7){
+    for(let h=0;h<550;h+=16){
+      n++; 
+      gameObjects.push(new GameObject({path: require("../Resources/Player.png"), posX: i, posY: h, imageW: 4, imageH: 4}));
+    }
+  }*/
+  console.log(n);
   /*
   introductionElement = document.getElementById("introduction");
   restartButton = document.getElementById("restart");    

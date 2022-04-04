@@ -2,48 +2,50 @@ import React from "react";
 
 var img, instantiated = false;
 let imageSrc;
-let posX, posY, imageW, imageH;
 
 class GameObject extends React.Component{
     constructor(props){
         super(props);
 
         imageSrc = props.path;
-        posX = props.posX;
-        posY = props.posY;
-        imageW = props.imageW;
-        imageH = props.imageH;
         this.instantiate();
-/*
-        this.state = {
 
+        this.state = {
+            posX : props.posX,
+            posY : props.posY,
+            imageW : props.imageW,
+            imageH : props.imageH
         };
-*/
+
     }
 
     instantiate(){
         console.log(imageSrc);
-        this.asyncInstantiate.bind(this, imageSrc);
+        this.asyncInstantiate.bind(this);
         this.asyncInstantiate(imageSrc);
-    
     }
     asyncInstantiate = async(e) => {
         img = new Image();
         img.setAttribute('crossOrigin', '');
         imageSrc = e.default;
         img.src = imageSrc;
-        img.onload = function(){
-            instantiated = true;
-            imageW = this.width * imageW;
-            imageH = this.height * imageH;
-            
-            console.log("Instanziata"+img.src);
-        };
+        img.onload = this.loadedImage.bind(this, img.width, img.height);
+    }
+
+    loadedImage = (width, height) => {
+        instantiated = true;
+        console.log(this.state);
+        this.state.imageW = width * this.state.imageW;
+        this.state.imageH = height * this.state.imageH;
+        
+        console.log("Instanziata"+img.src + "  " + this.state.imageW + "   " + this.state.imageH);
     }
 
     draw = (ctx, canvas) =>{
         if(instantiated){
-            ctx.drawImage(img, posX, posY,imageW, imageH);
+            //instantiated = false;
+            //console.log(img + "   " + posX + "   " + posY + "   " + imageW + "   " + imageH);
+            ctx.drawImage(img, this.state.posX, this.state.posY,this.state.imageW, this.state.imageH);
         }    
     }
 
@@ -52,16 +54,16 @@ class GameObject extends React.Component{
         console.log(e.key);
         switch(e.key){
             case 'w':
-                posY -= 1;
+                this.state.posY -= 1;
                 break;
             case 'a':
-                posX -= 1;
+                this.state.posX -= 1;
                 break;
             case 's':
-                posY += 1;
+                this.state.posY += 1;
                 break;
             case 'd':
-                posX += 1;
+                this.state.posX += 1;
                 break;
         }
     }
