@@ -57,14 +57,14 @@ function draw() {
 
 let canvas;
 
-const addObject = (x, y, scaleX, scaleY, path) =>{
-  gameObjects.push(new GameObject({path: require(path), posX: x, posY: y, imageW: scaleX, imageH: scaleY}));
-}
 
-function Init(id){
+const Init = (id) =>{
   canvas = document.getElementById(id);
   ctx = canvas.getContext("2d");
 
+  const addObject = (x, y, scaleX, scaleY, path) =>{
+    gameObjects.push(new GameObject({path: require(path), posX: x, posY: y, imageW: scaleX, imageH: scaleY}));
+  }
   resetGame();
 
   gameObjects = [new GameObject({path: require("../Resources/Player.png"), posX: 10, posY: 10, imageW: 4, imageH: 4})];
