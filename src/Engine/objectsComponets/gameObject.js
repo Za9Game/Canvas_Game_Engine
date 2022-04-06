@@ -18,6 +18,9 @@ class GameObject extends React.Component{
         };
 
     }
+    CHIAMAMI = () =>{
+        console.log("SONO STATA CHIAMATA");
+    }
 
     instantiate(){
         console.log(imageSrc);
@@ -51,7 +54,6 @@ class GameObject extends React.Component{
 
 
     keyDown = (e) =>{
-        console.log(e.key);
         switch(e.key){
             case 'w':
                 this.state.posY -= 1;

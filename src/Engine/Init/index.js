@@ -1,10 +1,11 @@
+import React from "react";
 import hitDetection from "../Physics/mainPhysics";
 import GameObject from "../objectsComponets/gameObject";
 
 let gameStarted; 
 
 let ctx;
-let gameObjects;
+let gameObjects = [];
 
 function resetGame() {
   gameStarted = true;
@@ -55,28 +56,27 @@ function draw() {
 }
 
 let canvas;
+
+const addObject = (x, y, scaleX, scaleY, path) =>{
+  gameObjects.push(new GameObject({path: require(path), posX: x, posY: y, imageW: scaleX, imageH: scaleY}));
+}
+
 function Init(id){
   canvas = document.getElementById(id);
   ctx = canvas.getContext("2d");
-  let n=0;
+
+  resetGame();
+
   gameObjects = [new GameObject({path: require("../Resources/Player.png"), posX: 10, posY: 10, imageW: 4, imageH: 4})];
- /* for(let i=0;i<800;i+=7){
+  
+
+  /* for(let i=0;i<800;i+=7){
     for(let h=0;h<550;h+=16){
       n++; 
       gameObjects.push(new GameObject({path: require("../Resources/Player.png"), posX: i, posY: h, imageW: 4, imageH: 4}));
     }
   }*/
-  console.log(n);
-  /*
-  introductionElement = document.getElementById("introduction");
-  restartButton = document.getElementById("restart");    
-  restartButton.addEventListener("click", function (event) {
-      event.preventDefault();
-      resetGame();
-      restartButton.style.display = "none";
-  });
-*/
-  resetGame();
+  
 
   window.addEventListener("mousedown", function () {
     
