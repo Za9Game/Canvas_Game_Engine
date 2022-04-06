@@ -57,25 +57,28 @@ function draw() {
 
 let canvas;
 
-
 const Init = (id) =>{
   canvas = document.getElementById(id);
   ctx = canvas.getContext("2d");
 
+  const initialzieButtons = () =>{
+    var b = document.querySelector("#addObject");
+    b.onclick= function() {addObject(3,2,4,4, require("../Resources/Player.png"))};
+  }
+  
   const addObject = (x, y, scaleX, scaleY, path) =>{
-    gameObjects.push(new GameObject({path: require(path), posX: x, posY: y, imageW: scaleX, imageH: scaleY}));
+    try{
+      gameObjects.push(new GameObject({path: require(path), posX: x, posY: y, imageW: scaleX, imageH: scaleY}));
+    }catch{
+      gameObjects.push(new GameObject({path: path, posX: x, posY: y, imageW: scaleX, imageH: scaleY}));  
+    }
   }
   resetGame();
 
   gameObjects = [new GameObject({path: require("../Resources/Player.png"), posX: 10, posY: 10, imageW: 4, imageH: 4})];
   
-
-  /* for(let i=0;i<800;i+=7){
-    for(let h=0;h<550;h+=16){
-      n++; 
-      gameObjects.push(new GameObject({path: require("../Resources/Player.png"), posX: i, posY: h, imageW: 4, imageH: 4}));
-    }
-  }*/
+  
+  initialzieButtons();
   
 
   window.addEventListener("mousedown", function () {
@@ -118,10 +121,12 @@ const Init = (id) =>{
         animate();
         draw();
 
+        console.log("GameObjects: "+gameObjects.length)
+
         fpsCalc(now);
       }
     }
-
+    
     window.requestAnimationFrame(update);
   }
   window.requestAnimationFrame(update);
