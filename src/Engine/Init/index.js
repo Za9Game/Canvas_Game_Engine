@@ -8,7 +8,7 @@ let ctx;
 let gameObjects = [];
 
 function resetGame() {
-  gameStarted = true;
+  gameStarted = false;
   
   draw();
 }
@@ -62,8 +62,8 @@ const Init = (id) =>{
   ctx = canvas.getContext("2d");
 
   const initialzieButtons = () =>{
-    var b = document.querySelector("#addObject");
-    b.onclick= function() {addObject(3,2,4,4, require("../Resources/Player.png"))};
+    document.querySelector("#addObject").onclick= function() {addObject(3,2,4,4, require("../Resources/Player.png"))};
+    document.querySelector("#run").onclick= function() {gameStarted = true};
   }
   
   const addObject = (x, y, scaleX, scaleY, path) =>{
@@ -83,10 +83,10 @@ const Init = (id) =>{
 
   window.addEventListener("mousedown", function () {
     
-    if (!gameStarted) {
+  //  if (!gameStarted) {
       //introductionElement.style.opacity = 0;
-      gameStarted = true;
-    }
+  //    gameStarted = true;
+  //  }
   });
     
   window.addEventListener("mouseup", function () {
