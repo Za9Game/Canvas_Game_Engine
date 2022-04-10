@@ -6,6 +6,9 @@ import useLocalStorage from './Editor/localStorage';
 
 var mounted = false;
 export default function App(){
+  const [code, setCode] = useLocalStorage('js','');
+  const [srcDoc, setSrcDoc] = useState('');
+
   useEffect(()=>{
     if(!mounted){
       mounted = true;
