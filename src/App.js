@@ -1,43 +1,48 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Init from './Engine/Init';
 import './App.css';
-import UseScript from './Editor/useScript';
+import EditorCode from './Editor/editorCode';
+import useLocalStorage from './Editor/localStorage';
 
-const useProva = () =>{
-  
-}
+var mounted = false;
+export default function App(){
+  useEffect(()=>{
+    if(!mounted){
+      mounted = true;
+      Init("game");
+    }
+    const timeout = setTimeout(() => {
+      setSrcDoc(`
+        <html>
+          <body></body>
+          <script>${code}</script>
+        </html>
+      `)
+    }, 250)
 
-export default class App extends React.Component{
-  componentDidMount(){
-    Init("game");
-  }
-  
-  constructor(props){
-    super(props);
-    
-    new UseScript("./Editor/editorCode.js");
-  }
+    return () => clearTimeout(timeout);
 
-  render(){
-    return(
-      <div>
-        <div className="container">
-          <canvas id="game" width="800" height="600" style={{border: '1px solid black'}}></canvas>
-          <span id="fps"></span>
-          <button id="addObject" width="100" height="50">Add</button>
-          <button id="run">Run</button>
-          <div class="editor">
-            <div class="code">
-              <div class="js-code"></div>
-            </div>
+  }, [code]);
+
+
+  return(
+    <div>
+      <div className="container">
+        <canvas id="game" width="800" height="600" style={{border: '1px solid black'}}></canvas>
+        <span id="fps"></span>
+        <button id="run">Run</button>
+        <button id="addObject" width="100" height="50">Add</button>
+        <div className="editor">
+          <div className='pane top-pane'>
+            <EditorCode displayName="Javascript" value={code} onChange={setCode} />
           </div>
-          <div class="preview">
-            <iframe id="preview-window"></iframe>
+          <div className='pane'>
+            <iframe srcDoc={srcDoc} title='output' sandbox='allow-scripts' frameBorder="0" width="100%" height="100%"/>
           </div>
-
         </div>
-      </div>
 
-    ); 
-  }
+      </div>
+    </div>
+
+  );
 }
