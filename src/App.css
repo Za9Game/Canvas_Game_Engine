@@ -1,4 +1,4 @@
-#webgl{    
+.webgl{    
   padding: 0;
   margin: auto;
   display: block;
@@ -20,4 +20,10 @@ body {
   justify-content: left;
   align-items: center;
   height: 100%;
+}
+
+#gameObjects{
+  display: flex;
+  overflow-y: auto;
+  height: 100px;
 }

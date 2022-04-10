@@ -55,6 +55,26 @@ function draw() {
   });
 }
 
+const updateList = () =>{
+  //rimmuove tutti gli elementi della lista
+  while (gameObjectsList.firstChild) {
+    gameObjectsList.removeChild(gameObjectsList.lastChild);
+  }
+
+  //la ripopola con tutti i gameobjects
+  gameObjects.forEach(object =>{
+    try{
+      var opt = document.createElement('option');
+      console.log(object.state.name);
+      opt.value = object.state.name;
+      opt.innerHTML = object.state.name;
+      gameObjectsList.appendChild(opt);
+    }
+    catch{}
+  });
+}
+
+var gameObjectsList;
 let canvas;
 
 const Init = (id) =>{
@@ -62,20 +82,22 @@ const Init = (id) =>{
   ctx = canvas.getContext("2d");
 
   const initialzieButtons = () =>{
-    document.querySelector("#addObject").onclick= function() {addObject(3,2,4,4, require("../Resources/Player.png"))};
-    document.querySelector("#run").onclick= function() {gameStarted = true};
+    document.querySelector("#addObject").onclick= function() {if(gameStarted)addObject(3,2,4,4, require("../Resources/Player.png"))};
+    document.querySelector("#run").onclick= function() {gameStarted = true; updateList();};
+    gameObjectsList = document.querySelector("#listGameObjects");
   }
   
   const addObject = (x, y, scaleX, scaleY, path) =>{
     try{
-      gameObjects.push(new GameObject({path: require(path), posX: x, posY: y, imageW: scaleX, imageH: scaleY}));
+      gameObjects.push(new GameObject({path: require(path), posX: x, posY: y, imageW: scaleX, imageH: scaleY, name: "GameObject "+gameObjects.length}));
     }catch{
-      gameObjects.push(new GameObject({path: path, posX: x, posY: y, imageW: scaleX, imageH: scaleY}));  
+      gameObjects.push(new GameObject({path: path, posX: x, posY: y, imageW: scaleX, imageH: scaleY, name: "GameObject "+gameObjects.length}));  
     }
+    updateList();
   }
   resetGame();
 
-  gameObjects = [new GameObject({path: require("../Resources/Player.png"), posX: 10, posY: 10, imageW: 4, imageH: 4})];
+  gameObjects = [new GameObject({path: require("../Resources/Player.png"), posX: 10, posY: 10, imageW: 4, imageH: 4, name: "GameObject "+gameObjects.length})];
   
   
   initialzieButtons();

@@ -14,12 +14,13 @@ class GameObject extends React.Component{
             posX : props.posX,
             posY : props.posY,
             imageW : props.imageW,
-            imageH : props.imageH
+            imageH : props.imageH,
+            name: props.name
         };
 
     }
-    CHIAMAMI = () =>{
-        console.log("SONO STATA CHIAMATA");
+    chiamami = (name) =>{
+        this.state.name = name;
     }
 
     instantiate(){
@@ -54,19 +55,24 @@ class GameObject extends React.Component{
 
 
     keyDown = (e) =>{
-        switch(e.key){
-            case 'w':
-                this.state.posY -= 1;
-                break;
-            case 'a':
-                this.state.posX -= 1;
-                break;
-            case 's':
-                this.state.posY += 1;
-                break;
-            case 'd':
-                this.state.posX += 1;
-                break;
+        try{
+            super.keyDown(e);
+        }
+        catch{/*
+            switch(e.key){
+                case 'w':
+                    this.state.posY -= 1;
+                    break;
+                case 'a':
+                    this.state.posX -= 1;
+                    break;
+                case 's':
+                    this.state.posY += 1;
+                    break;
+                case 'd':
+                    this.state.posX += 1;
+                    break;
+            }*/
         }
     }
 

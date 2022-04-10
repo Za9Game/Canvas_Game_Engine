@@ -32,9 +32,17 @@ export default function App(){
     <div>
       <div className="container">
         <canvas id="game" width="800" height="600" style={{border: '1px solid black'}}></canvas>
+        
         <span id="fps"></span>
         <button id="run">Run</button>
         <button id="addObject" width="100" height="50">Add</button>
+        <select name="gameObjects" id="gameObjects" multiple size="1">
+          <optgroup id="listGameObjects" label="GameObjects: ">
+            <option value="gameObject1">gameObject1</option>
+            <option value="gameObject2">gameObject2</option>
+          </optgroup>
+        </select>
+
         <div className="editor">
           <div className='pane top-pane'>
             <EditorCode displayName="Javascript" value={code} onChange={setCode} />
