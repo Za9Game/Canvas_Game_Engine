@@ -1,6 +1,7 @@
 import React from "react";
 import hitDetection from "../Physics/mainPhysics";
 import GameObject from "../objectsComponets/gameObject";
+import $ from 'jquery';
 
 let gameStarted; 
 
@@ -61,6 +62,10 @@ const updateList = () =>{
     gameObjectsList.removeChild(gameObjectsList.lastChild);
   }
 
+  var optG = document.createElement('optgroup');
+  optG.label = "GameObjects:";
+  gameObjectsList.appendChild(optG);
+
   //la ripopola con tutti i gameobjects
   gameObjects.forEach(object =>{
     try{
@@ -68,23 +73,47 @@ const updateList = () =>{
       console.log(object.state.name);
       opt.value = object.state.name;
       opt.innerHTML = object.state.name;
-      gameObjectsList.appendChild(opt);
+      optG.appendChild(opt);
     }
     catch{}
   });
 }
 
+const codeChange = () =>{
+  try{
+  var gameObjectToChange;
+  var listObjectName = gameObjectsList.options[gameObjectsList.selectedIndex].value;
+
+  gameObjects.forEach(object =>{
+    //console.log(object.state.name + "  " + listObjectName);
+    if(object.state.name == listObjectName){
+      gameObjectToChange = object;
+      return true;
+    }
+  });
+  if(gameObjectToChange != undefined){
+    if($('head script[src="'+listObjectName+'.js"]').length <= 0){
+      $.getScript(listObjectName+".js");
+    }
+    console.log(gameObjectToChange);
+  }
+      
+}catch{}
+}
+
 var gameObjectsList;
 let canvas;
 
-const Init = (id) =>{
+const Init = (id, setCode) =>{
   canvas = document.getElementById(id);
   ctx = canvas.getContext("2d");
 
   const initialzieButtons = () =>{
     document.querySelector("#addObject").onclick= function() {if(gameStarted)addObject(3,2,4,4, require("../Resources/Player.png"))};
     document.querySelector("#run").onclick= function() {gameStarted = true; updateList();};
-    gameObjectsList = document.querySelector("#listGameObjects");
+    gameObjectsList = document.querySelector("#gameObjects");
+
+    document.querySelector("#editorCode")
   }
   
   const addObject = (x, y, scaleX, scaleY, path) =>{
@@ -138,7 +167,12 @@ const Init = (id) =>{
     if (elapsed > fpsInterval) {
       then = now - (elapsed % fpsInterval);
       if(gameStarted){
-
+        try{
+          //console.log(gameObjectsList.options[gameObjectsList.selectedIndex].value);
+        }
+        catch{
+         // console.log(gameObjectsList.options);
+        }
         physics();
         animate();
         draw();

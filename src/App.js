@@ -5,6 +5,7 @@ import EditorCode from './Editor/editorCode';
 import useLocalStorage from './Editor/localStorage';
 
 var mounted = false;
+var prova='';
 export default function App(){
   const [code, setCode] = useLocalStorage('js','');
   const [srcDoc, setSrcDoc] = useState('');
@@ -12,7 +13,7 @@ export default function App(){
   useEffect(()=>{
     if(!mounted){
       mounted = true;
-      Init("game");
+      prova = Init("game", setCode);
     }
     const timeout = setTimeout(() => {
       setSrcDoc(`
@@ -27,6 +28,13 @@ export default function App(){
 
   }, [code]);
 
+  const codeChange = (e) =>{
+    console.log(prova);
+  }
+
+  const codeChange2 = (e) =>{
+    setCode(e); codeChange(e)
+  }
 
   return(
     <div>
@@ -45,7 +53,7 @@ export default function App(){
 
         <div className="editor">
           <div className='pane top-pane'>
-            <EditorCode displayName="Javascript" value={code} onChange={setCode} />
+            <EditorCode displayName="Javascript" value={code} onChange={(e) => {codeChange2(e)}} />
           </div>
           <div className='pane'>
             <iframe srcDoc={srcDoc} title='output' sandbox='allow-scripts' frameBorder="0" width="100%" height="100%"/>
