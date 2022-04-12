@@ -5,7 +5,7 @@ import EditorCode from './Editor/editorCode';
 import useLocalStorage from './Editor/localStorage';
 
 var mounted = false;
-var prova='';
+var init='';
 export default function App(){
   const [code, setCode] = useLocalStorage('js','');
   const [srcDoc, setSrcDoc] = useState('');
@@ -13,7 +13,7 @@ export default function App(){
   useEffect(()=>{
     if(!mounted){
       mounted = true;
-      prova = Init("game", setCode);
+      init = new Init({id:"game"});
     }
     const timeout = setTimeout(() => {
       setSrcDoc(`
@@ -29,7 +29,7 @@ export default function App(){
   }, [code]);
 
   const codeChange = (e) =>{
-    console.log(prova);
+    console.log(init);
   }
 
   const codeChange2 = (e) =>{
