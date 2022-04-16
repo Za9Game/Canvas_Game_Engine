@@ -59,6 +59,11 @@ function draw() {
 
 const updateList = () =>{
   //rimmuove tutti gli elementi della lista
+  let selectedIndex = 0;
+  if(gameObjectsList.selectedIndex != -1){
+    selectedIndex = gameObjectsList.selectedIndex;
+  }
+
   while (gameObjectsList.firstChild) {
     gameObjectsList.removeChild(gameObjectsList.lastChild);
   }
@@ -78,6 +83,7 @@ const updateList = () =>{
     }
     catch{}
   });
+  gameObjectsList.selectedIndex = selectedIndex;
 }
 
 const addObject = (x, y, scaleX, scaleY, path) =>{
@@ -89,8 +95,10 @@ const addObject = (x, y, scaleX, scaleY, path) =>{
   updateList();
 }
 
-const codeChange = () =>{
-  try{
+const codeChange = (e) =>{
+  if(gameObjectsList.selectedIndex == -1)
+    return;
+  
   var gameObjectToChange;
   var listObjectName = gameObjectsList.options[gameObjectsList.selectedIndex].value;
 
@@ -103,12 +111,25 @@ const codeChange = () =>{
   });
   if(gameObjectToChange != undefined){
     if($('head script[src="'+listObjectName+'.js"]').length <= 0){
-      $.getScript(listObjectName+".js");
+      var script = document.createElement('script');
+      script.setAttribute("type", "text/javascript");
+      script.setAttribute("src", listObjectName+'.js');
+
+      document.getElementsByTagName('head')[0].appendChild(script);
+      console.log("prima volta ");
+      console.log(script.src);
     }
+    $.getScript(listObjectName+".js")
+        .done(function(script, textStatus){
+          script = e;
+          console.log( "Load was performed " + script);
+          console.log( "name script: " + listObjectName+'.js');
+        })
+        .fail(function(){
+          console.log("LOADING FAILED");
+        });
     console.log(gameObjectToChange);
   }
-      
-}catch{}
 }
 
 var gameObjectsList;
@@ -157,7 +178,7 @@ class Init extends React.Component{
     });
       
     window.addEventListener("resize", function () {
-      this.draw();
+      draw();
     });
     
     window.addEventListener('keydown',inputDown,false);
@@ -211,6 +232,11 @@ class Init extends React.Component{
     before = now;                            
     const fps = 1 / deltaTime;             
     fpsElem.textContent = fps.toFixed(1); 
+  }
+
+  codeChange = (e) =>{
+    if(gameStarted)
+      codeChange(e);
   }
 }
 

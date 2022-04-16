@@ -22,18 +22,15 @@ export default function App(){
           <script>${code}</script>
         </html>
       `)
-    }, 250)
+    }, 1000)
 
     return () => clearTimeout(timeout);
 
   }, [code]);
 
   const codeChange = (e) =>{
-    console.log(init);
-  }
-
-  const codeChange2 = (e) =>{
-    setCode(e); codeChange(e)
+    setCode(e);
+    init.codeChange(e);
   }
 
   return(
@@ -46,14 +43,13 @@ export default function App(){
         <button id="addObject" width="100" height="50">Add</button>
         <select name="gameObjects" id="gameObjects" multiple size="1">
           <optgroup id="listGameObjects" label="GameObjects: ">
-            <option value="gameObject1">gameObject1</option>
-            <option value="gameObject2">gameObject2</option>
+            <option value="gameObject1"></option>
           </optgroup>
         </select>
 
         <div className="editor">
           <div className='pane top-pane'>
-            <EditorCode displayName="Javascript" value={code} onChange={(e) => {codeChange2(e)}} />
+            <EditorCode displayName="Javascript" value={code} onChange={(e) => {codeChange(e)}} />
           </div>
           <div className='pane'>
             <iframe srcDoc={srcDoc} title='output' sandbox='allow-scripts' frameBorder="0" width="100%" height="100%"/>
