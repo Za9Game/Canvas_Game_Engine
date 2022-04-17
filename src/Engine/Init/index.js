@@ -121,9 +121,17 @@ const codeChange = (e) =>{
     }
     $.getScript(listObjectName+".js")
         .done(function(script, textStatus){
-          script = e;
-          console.log( "Load was performed " + script);
+          script = script.replace(script, e);
+          eval(script);
+          console.log( "Load was performed ");
           console.log( "name script: " + listObjectName+'.js');
+        })
+        .fail(function(){
+          console.log("LOADING FAILED");
+        });
+    $.getScript(listObjectName+".js")
+        .done(function(script, textStatus){
+          console.log(script);
         })
         .fail(function(){
           console.log("LOADING FAILED");
