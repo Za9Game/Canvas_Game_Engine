@@ -15,7 +15,8 @@ class GameObject extends React.Component{
             posY : props.posY,
             imageW : props.imageW,
             imageH : props.imageH,
-            name: props.name
+            name: props.name,
+            userCode: ""
         };
 
     }
@@ -45,7 +46,7 @@ class GameObject extends React.Component{
         console.log("Instanziata"+img.src + "  " + this.state.imageW + "   " + this.state.imageH);
     }
 
-    draw = (ctx, canvas) =>{
+    draw = (canvas, ctx) =>{
         if(instantiated){
             //instantiated = false;
             //console.log(img + "   " + posX + "   " + posY + "   " + imageW + "   " + imageH);
@@ -53,6 +54,12 @@ class GameObject extends React.Component{
         }    
     }
 
+    keyUp = () =>{
+        try{
+            super.keyUp();
+        }
+        catch{}
+    }
 
     keyDown = (e) =>{
         try{

@@ -1,6 +1,6 @@
 import React from "react";
 import hitDetection from "../Physics/mainPhysics";
-import GameObject from "../objectsComponets/gameObject";
+import userObject from "../objectsComponets/userObject";
 import $ from 'jquery';
 import { render } from "@testing-library/react";
 
@@ -12,7 +12,7 @@ let gameObjects = [];
 function resetGame() {
   gameStarted = false;
   
-  draw();
+  updateObjects();
 }
 
 function inputDown(e){
@@ -23,8 +23,13 @@ function inputDown(e){
     }
   });
 }
-function inputUp(e){
-
+function inputUp(e){  
+  gameObjects.forEach(object =>{
+    try{
+      object.keyUp();
+    }catch{
+  }
+});
 }
 
 function physics(){
@@ -40,7 +45,7 @@ function animate(){
   
 }
 
-function draw() {
+function updateObjects() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   ctx.save();
@@ -53,7 +58,7 @@ function draw() {
   ctx.imageSmoothingEnabled = false;
 
   gameObjects.forEach(object =>{
-    object.draw(ctx, canvas);
+    object.update(canvas, ctx);
   });
 }
 
@@ -88,15 +93,15 @@ const updateList = () =>{
 
 const addObject = (x, y, scaleX, scaleY, path) =>{
   try{
-    gameObjects.push(new GameObject({path: require(path), posX: x, posY: y, imageW: scaleX, imageH: scaleY, name: "GameObject "+gameObjects.length}));
+    gameObjects.push(new userObject({path: require(path), posX: x, posY: y, imageW: scaleX, imageH: scaleY, name: "GameObject "+gameObjects.length}));
   }catch{
-    gameObjects.push(new GameObject({path: path, posX: x, posY: y, imageW: scaleX, imageH: scaleY, name: "GameObject "+gameObjects.length}));  
+    gameObjects.push(new userObject({path: path, posX: x, posY: y, imageW: scaleX, imageH: scaleY, name: "GameObject "+gameObjects.length}));  
   }
   updateList();
 }
 
 const codeChange = (e) =>{
-  if(gameObjectsList.selectedIndex == -1)
+  if(gameObjectsList.selectedIndex == -1 || !gameStarted)
     return;
   
   var gameObjectToChange;
@@ -110,32 +115,7 @@ const codeChange = (e) =>{
     }
   });
   if(gameObjectToChange != undefined){
-    if($('head script[src="'+listObjectName+'.js"]').length <= 0){
-      var script = document.createElement('script');
-      script.setAttribute("type", "text/javascript");
-      script.setAttribute("src", listObjectName+'.js');
-
-      document.getElementsByTagName('head')[0].appendChild(script);
-      console.log("prima volta ");
-      console.log(script.src);
-    }
-    $.getScript(listObjectName+".js")
-        .done(function(script, textStatus){
-          script = script.replace(script, e);
-          eval(script);
-          console.log( "Load was performed ");
-          console.log( "name script: " + listObjectName+'.js');
-        })
-        .fail(function(){
-          console.log("LOADING FAILED");
-        });
-    $.getScript(listObjectName+".js")
-        .done(function(script, textStatus){
-          console.log(script);
-        })
-        .fail(function(){
-          console.log("LOADING FAILED");
-        });
+    gameObjectToChange.setCodeUser(e);
     console.log(gameObjectToChange);
   }
 }
@@ -169,7 +149,7 @@ class Init extends React.Component{
     
     resetGame();
 
-    gameObjects = [new GameObject({path: require("../Resources/Player.png"), posX: 10, posY: 10, imageW: 4, imageH: 4, name: "GameObject "+gameObjects.length})];
+    gameObjects = [new userObject({path: require("../Resources/Player.png"), posX: 10, posY: 10, imageW: 4, imageH: 4, name: "GameObject "+gameObjects.length})];
     
     
     this.initialzieButtons();
@@ -186,7 +166,7 @@ class Init extends React.Component{
     });
       
     window.addEventListener("resize", function () {
-      draw();
+      updateObjects();
     });
     
     window.addEventListener('keydown',inputDown,false);
@@ -223,9 +203,9 @@ class Init extends React.Component{
         }
         physics();
         animate();
-        draw();
+        updateObjects();
 
-        console.log("GameObjects: "+gameObjects.length)
+        //console.log("GameObjects: "+gameObjects.length)
 
         this.fpsCalc(now);
       }
