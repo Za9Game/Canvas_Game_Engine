@@ -3,10 +3,14 @@ TodoList
 Main Aim:
 
 ✔TODO: Generalize Object
-TODO: Input
-TODO: UI Engine
+✔TODO: Input
+✔TODO: UI Engine
+✔TODO: Add Objects
+✔TODO: Edit Code Of Objects
+TODO: Add Registration and Login
+TODO: Syncronize project with database
 TODO: Display Objects with Property
-TODO: Modify them
+TODO: Modify Property
 TODO: ImportSprite
 TODO: Collision
 TODO: Physics

@@ -8,31 +8,14 @@ var mounted = false;
 var init='';
 export default function App(){
   const [code, setCode] = useLocalStorage('js','');
-  const [srcDoc, setSrcDoc] = useState('');
 
   useEffect(()=>{
     if(!mounted){
       mounted = true;
       init = new Init({id:"game"});
     }
-    const timeout = setTimeout(() => {
-      setSrcDoc(`
-        <html>
-          <body></body>
-          <script>${code}</script>
-        </html>
-      `)
-    }, 1000)
-
-    return () => clearTimeout(timeout);
-
-  }, [code]);
-
-  const codeChange = (e) =>{
-    setCode(e);
-    init.codeChange(e);
-  }
-
+  })
+  
   return(
     <div>
       <div className="container">
@@ -49,10 +32,7 @@ export default function App(){
 
         <div className="editor">
           <div className='pane top-pane'>
-            <EditorCode displayName="Javascript" value={code} onChange={(e) => {codeChange(e)}} />
-          </div>
-          <div className='pane'>
-            <iframe srcDoc={srcDoc} title='output' sandbox='allow-scripts' frameBorder="0" width="100%" height="100%"/>
+            <EditorCode displayName="Javascript" value={code} onChange={(e) => {init.codeChange(e)}} />
           </div>
         </div>
 
