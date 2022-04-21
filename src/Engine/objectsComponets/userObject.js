@@ -18,7 +18,7 @@ class userObject extends GameObject{
 
     }
 
-    keyDown = (e) =>{
+    keyDown = (e) =>{ 
         isKeyDown = true;
         keyDown = e.key;/*
         switch(e.key){
@@ -41,7 +41,6 @@ class userObject extends GameObject{
     }
 
     setCodeUser = (e) => {
-        console.log("SONO ENTARTOOOO");
         this.state.userCode = e;
     }
 

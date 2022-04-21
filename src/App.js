@@ -15,6 +15,11 @@ export default function App(){
       init = new Init({id:"game"});
     }
   })
+
+  const codeChange = (e) =>{
+    setCode(e);
+    init.codeChange(e);
+  }
   
   return(
     <div>
@@ -32,7 +37,7 @@ export default function App(){
 
         <div className="editor">
           <div className='pane top-pane'>
-            <EditorCode displayName="Javascript" value={code} onChange={(e) => {init.codeChange(e)}} />
+            <EditorCode displayName="Javascript" value={code} onChange={(e) => {codeChange(e)}} />
           </div>
         </div>
 

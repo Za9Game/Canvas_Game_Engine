@@ -116,7 +116,6 @@ const codeChange = (e) =>{
   });
   if(gameObjectToChange != undefined){
     gameObjectToChange.setCodeUser(e);
-    console.log(gameObjectToChange);
   }
 }
 
