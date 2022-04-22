@@ -5,7 +5,7 @@ var isKeyDown = false, keyDown='';
 class userObject extends GameObject{
     constructor(props){
         super(props);
-    }
+    } //MODIFICA
 
     update = (canvas, ctx) =>{
         this.draw(canvas, ctx);
