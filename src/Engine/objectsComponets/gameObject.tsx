@@ -1,10 +1,29 @@
 import React from "react";
 
-var img, instantiated = false;
-let imageSrc;
+interface GameObjectInterfaceState{
+    posX: number;
+    posY: number;
+    imageW: number;
+    imageH: number;
+    name: string;
+    userCode: string;
+}
 
-class GameObject extends React.Component{
-    constructor(props){
+interface GameObjectInterfaceProps{
+    path: string;
+    posX: number;
+    posY: number;
+    imageW: number;
+    imageH: number;
+    name: string;
+    userCode: string;
+}
+var img:any, instantiated = false;
+let imageSrc:any;
+
+class GameObject extends React.Component<GameObjectInterfaceProps, GameObjectInterfaceState>{
+    
+    constructor(props: GameObjectInterfaceProps){
         super(props);
 
         imageSrc = props.path;
@@ -18,18 +37,20 @@ class GameObject extends React.Component{
             name: props.name,
             userCode: ""
         };
-
     }
-    chiamami = (name) =>{
-        this.state.name = name;
+
+    chiamami = (name: string) =>{
+        this.state = {
+            ...this.state,
+            name
+        };
     }
 
     instantiate(){
         console.log(imageSrc);
-        this.asyncInstantiate.bind(this);
         this.asyncInstantiate(imageSrc);
     }
-    asyncInstantiate = async(e) => {
+    asyncInstantiate = async(e:any) => {
         img = new Image();
         img.setAttribute('crossOrigin', '');
         imageSrc = e.default;
@@ -37,16 +58,19 @@ class GameObject extends React.Component{
         img.onload = this.loadedImage.bind(this, img.width, img.height);
     }
 
-    loadedImage = (width, height) => {
+    loadedImage = (width:number, height:number) => {
         instantiated = true;
         console.log(this.state);
-        this.state.imageW = width * this.state.imageW;
-        this.state.imageH = height * this.state.imageH;
+        this.state = {
+            ...this.state,
+            imageW: width * this.state.imageW,
+            imageH: height * this.state.imageH
+        };
         
         console.log("Instanziata"+img.src + "  " + this.state.imageW + "   " + this.state.imageH);
     }
 
-    draw = (canvas, ctx) =>{
+    draw = (canvas:any, ctx:any) =>{
         if(instantiated){
             //instantiated = false;
             //console.log(img + "   " + posX + "   " + posY + "   " + imageW + "   " + imageH);
@@ -56,14 +80,14 @@ class GameObject extends React.Component{
 
     keyUp = () =>{
         try{
-            super.keyUp();
+            this.keyUp();
         }
         catch{}
     }
 
-    keyDown = (e) =>{
+    keyDown = (e:any) =>{
         try{
-            super.keyDown(e);
+            this.keyDown(e);
         }
         catch{/*
             switch(e.key){

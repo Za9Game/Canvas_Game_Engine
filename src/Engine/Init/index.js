@@ -63,6 +63,7 @@ function updateObjects() {
 }
 
 const updateList = () =>{
+  console.log("SONO QUAA AUUTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
   //rimmuove tutti gli elementi della lista
   let selectedIndex = 0;
   if(gameObjectsList.selectedIndex != -1){
@@ -179,7 +180,6 @@ class Init extends React.Component{
 
   initialzieButtons = () =>{
     document.querySelector("#addObject").onclick= function() {if(gameStarted)addObject(3,2,4,4, require("../Resources/Player.png"))};
-    document.querySelector("#run").onclick= function() {gameStarted = true; updateList();};
     gameObjectsList = document.querySelector("#gameObjects");
 
     document.querySelector("#editorCode")
@@ -224,6 +224,10 @@ class Init extends React.Component{
   codeChange = (e) =>{
     if(gameStarted)
       codeChange(e);
+  }
+  run = () =>{
+    gameStarted = true;
+    updateList();
   }
 }
 

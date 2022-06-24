@@ -13,8 +13,16 @@ export default function App(){
     if(!mounted){
       mounted = true;
       init = new Init({id:"game"});
+      codeChange(code);
+      
+      document.querySelector("#run").onclick= function() {codeChange(code)};
     }
   })
+
+  const start = () =>{
+    init.run();
+    codeChange(code);
+  }
 
   const codeChange = (e) =>{
     setCode(e);
@@ -24,10 +32,10 @@ export default function App(){
   return(
     <div>
       <div className="container">
-        <canvas id="game" width="800" height="600" style={{border: '1px solid black'}}></canvas>
+        <canvas id="game" width="400" height="300" style={{border: '1px solid black'}}></canvas>
         
         <span id="fps"></span>
-        <button id="run">Run</button>
+        <button id="run" onClick={start}>Run</button>
         <button id="addObject" width="100" height="50">Add</button>
         <select name="gameObjects" id="gameObjects" multiple size="1">
           <optgroup id="listGameObjects" label="GameObjects: ">

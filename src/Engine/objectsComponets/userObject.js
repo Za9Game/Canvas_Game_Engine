@@ -5,7 +5,7 @@ var isKeyDown = false, keyDown='';
 class userObject extends GameObject{
     constructor(props){
         super(props);
-    } //MODIFICA
+    }
 
     update = (canvas, ctx) =>{
         this.draw(canvas, ctx);
@@ -15,12 +15,17 @@ class userObject extends GameObject{
         }catch{}
         
         //console.log(this.state.name + "  " + this.state.userCode);
-
+        
     }
 
     keyDown = (e) =>{ 
         isKeyDown = true;
-        keyDown = e.key;/*
+        keyDown = e.key;
+        if(e.isKeyDown("e"))
+            console.log("EEEEE");
+        if(e.isKeyDown("r"))
+            console.log("EEEEE");
+        /*
         switch(e.key){
             case 'w':
                 this.state.posY -= 1;
